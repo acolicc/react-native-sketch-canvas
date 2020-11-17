@@ -120,6 +120,12 @@ RCT_EXPORT_METHOD(transferToBase64:(nonnull NSNumber *)reactTag type: (NSString*
     }];
 }
 
+RCT_EXPORT_METHOD(releaseDrawingContext:(nonnull NSNumber*)reactTag) {
+    [self runCanvas:reactTag block:^(RNSketchCanvas *canvas) {
+        [canvas releaseDrawingContext];
+    }];
+}
+
 #pragma mark - Utils
 
 - (void)runCanvas:(nonnull NSNumber *)reactTag block:(void (^)(RNSketchCanvas *canvas))block {

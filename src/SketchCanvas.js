@@ -109,6 +109,10 @@ class SketchCanvas extends React.Component {
     UIManager.dispatchViewManagerCommand(this._handle, UIManager.RNSketchCanvas.Commands.clear, [])
   }
 
+  releaseDrawingContext() {
+    UIManager.dispatchViewManagerCommand(this._handle, UIManager.RNSketchCanvas.Commands.releaseDrawingContext, [])
+  }
+
   undo() {
     let lastId = -1;
     this._paths.forEach(d => lastId = d.drawer === this.props.user ? d.path.id : lastId)
@@ -168,7 +172,7 @@ class SketchCanvas extends React.Component {
           id: parseInt(Math.random() * 100000000), color: this.props.strokeColor,
           width: this.props.strokeWidth, data: []
         }
-        
+
         UIManager.dispatchViewManagerCommand(
           this._handle,
           UIManager.RNSketchCanvas.Commands.newPath,
@@ -253,6 +257,11 @@ class SketchCanvas extends React.Component {
       />
     );
   }
+
+  componentWillUnmount() {
+    this.releaseDrawingContext();
+  }
+
 }
 
 SketchCanvas.MAIN_BUNDLE = Platform.OS === 'ios' ? UIManager.RNSketchCanvas.Constants.MainBundlePath : '';

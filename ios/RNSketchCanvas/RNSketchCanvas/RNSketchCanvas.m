@@ -443,6 +443,21 @@
     }
 }
 
+-(void) releaseDrawingContext {
+    if(_drawingContext){
+        CGContextRelease(_drawingContext);
+    }
+    if(_translucentDrawingContext){
+        CGContextRelease(_translucentDrawingContext);
+    }
+    if(_frozenImage){
+        CGImageRelease(_frozenImage);
+    }
+    if(_translucentFrozenImage){
+        CGImageRelease(_translucentFrozenImage);
+    }
+}
+
 @end
 
 @implementation CanvasText
